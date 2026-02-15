@@ -17,14 +17,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0          # needed for git-revision-date plugin
+          fetch-depth: 0
 
       - uses: astral-sh/setup-uv@v4
         with:
           enable-cache: true
 
+      - name: Set up Python
+        run: uv python install 3.13
+
       - name: Install deps
         run: uv sync --extra docs
 
       - name: Deploy to GitHub Pages
-        run: uv run mkdocs gh-deploy --force
+        run: uv run python -m mkdocs gh-deploy --force
