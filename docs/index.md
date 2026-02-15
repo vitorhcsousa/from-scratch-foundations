@@ -12,7 +12,7 @@ First-principles implementations, structured notes, and experiments for AI resea
 
 <div class="grid cards" markdown>
 
-- :material-math-integral-box:{ .lg .middle } **Math**
+-   :material-math-integral-box:{ .lg .middle } **Math**
 
     ---
 
@@ -20,7 +20,7 @@ First-principles implementations, structured notes, and experiments for AI resea
 
     [:octicons-arrow-right-24: Browse notes](math/index.md)
 
-- :material-brain:{ .lg .middle } **Deep Learning**
+-   :material-brain:{ .lg .middle } **Deep Learning**
 
     ---
 
@@ -28,7 +28,7 @@ First-principles implementations, structured notes, and experiments for AI resea
 
     [:octicons-arrow-right-24: Browse notes](deep-learning/index.md)
 
-- :material-robot:{ .lg .middle } **Reinforcement Learning**
+-   :material-robot:{ .lg .middle } **Reinforcement Learning**
 
     ---
 
@@ -36,7 +36,7 @@ First-principles implementations, structured notes, and experiments for AI resea
 
     [:octicons-arrow-right-24: Browse notes](reinforcement-learning/index.md)
 
-- :material-text-box-search:{ .lg .middle } **NLP & LLMs**
+-   :material-text-box-search:{ .lg .middle } **NLP & LLMs**
 
     ---
 
@@ -44,7 +44,7 @@ First-principles implementations, structured notes, and experiments for AI resea
 
     [:octicons-arrow-right-24: Browse notes](nlp-llms/index.md)
 
-- :material-code-braces:{ .lg .middle } **DSA**
+-   :material-code-braces:{ .lg .middle } **DSA**
 
     ---
 
