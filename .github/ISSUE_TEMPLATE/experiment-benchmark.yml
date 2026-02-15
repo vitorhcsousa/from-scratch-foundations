@@ -1,0 +1,79 @@
+name: Experiment / Benchmark
+description: Experiment with versioned config, saved metrics, and written conclusion
+title: "[Experiment] <short title>"
+labels: ["type:experiment"]
+body:
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Math
+        - Deep Learning
+        - NLP/LLMs
+        - Reinforcement Learning
+        - DSA
+        - Writing/Publishing
+        - Infra/Tooling
+    validations:
+      required: true
+
+  - type: textarea
+    id: hypothesis
+    attributes:
+      label: Hypothesis
+      description: What do you expect to observe and why?
+      placeholder: |
+        Example: Adam converges faster but can generalize worse than SGD+momentum on this setup.
+    validations:
+      required: true
+
+  - type: textarea
+    id: protocol
+    attributes:
+      label: Protocol
+      description: Dataset / config / seed / metrics / baselines.
+      placeholder: |
+        - Dataset: ...
+        - Seed: 42
+        - Primary metric: ...
+        - Baseline: ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: deliverables
+    attributes:
+      label: Deliverables
+      description: Expected paths in the repo.
+      placeholder: |
+        - configs/<exp>.yaml
+        - results/<exp>.json (or .csv)
+        - reports/<exp>.md (1 page)
+        - figures/<exp>_plot.png (optional)
+    validations:
+      required: true
+
+  - type: textarea
+    id: results
+    attributes:
+      label: Results (fill when finished)
+      description: Key numbers + interpretation + next step.
+      placeholder: |
+        - Result: ...
+        - Interpretation: ...
+        - Next step: ...
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: dod
+    attributes:
+      label: Definition of Done (DoD)
+      options:
+        - label: Versioned config + fixed seed
+          required: true
+        - label: Metrics saved (json/csv) and reproducible
+          required: true
+        - label: Written conclusion (hypothesis → result → next step)
+          required: true

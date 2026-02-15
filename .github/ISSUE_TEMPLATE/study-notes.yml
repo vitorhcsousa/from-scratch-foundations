@@ -1,0 +1,75 @@
+name: Study / Notes
+description: Reading + structured notes (+ Anki when it makes sense)
+title: "[Study] <book/chapter/topic>"
+labels: ["type:study"]
+body:
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Math
+        - Deep Learning
+        - NLP/LLMs
+        - Reinforcement Learning
+        - DSA
+        - Writing/Publishing
+        - Infra/Tooling
+    validations:
+      required: true
+
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope (book/chapter)
+      placeholder: |
+        Example: Prince — Ch. 6 (Fitting Models)
+    validations:
+      required: true
+
+  - type: textarea
+    id: key_points
+    attributes:
+      label: Key points to capture
+      description: Bullets of what you should be able to explain at the end.
+      placeholder: |
+        - Underfitting vs overfitting (bias/variance)
+        - Adam vs SGD (dynamics + generalization)
+        - Early stopping / regularization
+    validations:
+      required: true
+
+  - type: textarea
+    id: deliverables
+    attributes:
+      label: Deliverables
+      placeholder: |
+        - notes/<topic>.md
+        - anki/<deck>.tsv (front/back) (optional)
+        - 1 mini-exercise solved / demo (optional)
+    validations:
+      required: true
+
+  - type: textarea
+    id: why_questions
+    attributes:
+      label: 3 “Why questions”
+      description: Questions that force deep explanations.
+      placeholder: |
+        1) Why does momentum help in narrow valleys?
+        2) Why can Adam generalize worse?
+        3) Why does LR schedule matter?
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: dod
+    attributes:
+      label: Definition of Done (DoD)
+      options:
+        - label: Structured note (summary + key points + examples)
+          required: true
+        - label: At least 3 “why” questions answered in the note
+          required: false
+        - label: Anki cards created (when applicable)
+          required: false

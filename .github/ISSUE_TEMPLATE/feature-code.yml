@@ -1,0 +1,92 @@
+name: Feature (code)
+description: Implementation with clear deliverables (code + tests + minimal docs)
+title: "[Feature] <short title>"
+labels: ["type:feature"]
+body:
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      description: Which track does this issue belong to?
+      options:
+        - Math
+        - Deep Learning
+        - NLP/LLMs
+        - Reinforcement Learning
+        - DSA
+        - Writing/Publishing
+        - Infra/Tooling
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: 2–5 lines of context (why this matters now)
+      placeholder: |
+        Example: We need attention core to unblock Multi-Head Attention.
+    validations:
+      required: true
+
+  - type: textarea
+    id: goal
+    attributes:
+      label: Goal
+      description: One objective sentence describing what exists at the end.
+      placeholder: |
+        Example: Implement scaled dot-product attention with causal + padding masks.
+    validations:
+      required: true
+
+  - type: textarea
+    id: deliverables
+    attributes:
+      label: Deliverables (paths)
+      description: Expected artifacts with real repo paths.
+      placeholder: |
+        - src/<pkg>/attention.py
+        - tests/test_attention.py
+        - examples/attention_sanity.py
+        - docs/attention.md (optional)
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: Objective checks to validate "done".
+      placeholder: |
+        - Correct shapes for (B, T, D)
+        - Masking works (causal + padding)
+        - pytest passes locally + in CI
+    validations:
+      required: true
+
+  - type: textarea
+    id: tasks
+    attributes:
+      label: Tasks / Sub-issues
+      description: Use checklist if small. If large, create sub-issues and link them here.
+      placeholder: |
+        - [ ] Implement ...
+        - [ ] Add tests ...
+        - [ ] Example script ...
+        - [ ] Docs ...
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: dod
+    attributes:
+      label: Definition of Done (DoD)
+      options:
+        - label: Typed code (mypy/pyright-friendly) + lint OK
+          required: true
+        - label: Relevant tests passing (local + CI)
+          required: true
+        - label: Minimal docs (docstrings + short README/note if needed)
+          required: true
+        - label: Runnable example (examples/ or a short notebook) when applicable
+          required: false

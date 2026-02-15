@@ -1,0 +1,149 @@
+# ── Site ─────────────────────────────────────────────────────────────────────
+site_name: From-Scratch Foundations
+site_url: https://vitorsousa.com/from-scratch-foundations/
+site_description: >-
+  First-principles implementations, structured notes, and experiments
+  for AI research — all built from scratch.
+site_author: Vitor Sousa
+repo_url: https://github.com/vitorhcsousa/from-scratch-foundations
+repo_name: from-scratch-foundations
+edit_uri: edit/main/docs/
+
+# ── Theme ────────────────────────────────────────────────────────────────────
+theme:
+  name: material
+  custom_dir: docs/overrides
+  language: en
+
+  palette:
+    # Light mode — warm neutral (matches your site's light scheme)
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: custom                  # overridden in extra.css
+      accent: custom
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+
+    # Dark mode — deep neutral (matches your Astro dark theme)
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+  font: false                          # we load fonts in extra.css
+
+  icon:
+    repo: fontawesome/brands/github
+    logo: material/brain
+
+  features:
+    - navigation.instant
+    - navigation.instant.progress
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.top
+    - navigation.indexes
+    - search.suggest
+    - search.highlight
+    - search.share
+    - content.code.copy
+    - content.code.annotate
+    - content.tabs.link
+    - toc.follow
+    - header.autohide
+
+# ── Navigation ───────────────────────────────────────────────────────────────
+nav:
+  - Home: index.md
+  - Math:
+      - math/index.md
+  - Deep Learning:
+      - deep-learning/index.md
+  - Reinforcement Learning:
+      - reinforcement-learning/index.md
+  - NLP & LLMs:
+      - nlp-llms/index.md
+  - DSA:
+      - dsa/index.md
+
+# ── Plugins ──────────────────────────────────────────────────────────────────
+plugins:
+  - search
+  - minify:
+      minify_html: true
+  - git-revision-date-localized:
+      enable_creation_date: true
+      type: timeago
+  - awesome-pages
+
+# ── Markdown Extensions ─────────────────────────────────────────────────────
+markdown_extensions:
+  # --- Python-Markdown built-ins ---
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+      toc_depth: 3
+
+  # --- PyMdown Extensions ---
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.mark
+  - pymdownx.tilde
+  - pymdownx.critic
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.smartsymbols
+  - pymdownx.snippets:
+      auto_append:
+        - docs/includes/abbreviations.md
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+
+# ── Extra ────────────────────────────────────────────────────────────────────
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/vitorhcsousa
+    - icon: fontawesome/brands/linkedin
+      link: https://www.linkedin.com/in/vitorhcsousa/
+
+  generator: false
+
+extra_javascript:
+  - https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js
+  - https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js
+  - javascripts/katex.js
+
+extra_css:
+  - https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css
+  - stylesheets/extra.css
