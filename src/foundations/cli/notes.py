@@ -11,6 +11,7 @@ app = typer.Typer(no_args_is_help=True)
 console = Console()
 NOTES_DIR = Path("docs")
 
+
 def _find_repo_root() -> Path:
     """Best-effort repository root discovery.
 
