@@ -34,4 +34,5 @@ artifacts/**
 # Optional: MLflow local runs (if used in experiments)
 mlruns/
 # MkDocs build output
-site/
+site/.idea/
+.pytest_cache/
