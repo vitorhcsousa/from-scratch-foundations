@@ -11,7 +11,7 @@ Two public symbols are provided:
     LearnedPositionalEmbedding:
         ``nn.Module`` that adds a **learnable** position embedding (BERT /
         GPT-2 / ViT style).  Each position gets an independent trainable
-        vector, adding ``max_len × d_model`` parameters.
+        vector, adding ``max_len x d_model`` parameters.
 
 Both modules share the **same constructor signature and forward contract**,
 so they can be swapped with zero code changes::
@@ -46,6 +46,8 @@ class SinusoidalPositionalEncoding(nn.Module):
         - Output: ``(batch, seq_len, d_model)``
     """
 
+    pe: Tensor
+
     def __init__(
         self,
         d_model: int,
@@ -55,8 +57,8 @@ class SinusoidalPositionalEncoding(nn.Module):
         super().__init__()
         self.dropout = nn.Dropout(p=dropout)
 
-        pe = self.build_table(max_len, d_model)      # (max_len, d_model)
-        self.register_buffer("pe", pe.unsqueeze(0))   # (1, max_len, d_model)
+        pe = self.build_table(max_len, d_model)  # (max_len, d_model)
+        self.register_buffer("pe", pe.unsqueeze(0))  # (1, max_len, d_model)
 
     @staticmethod
     def build_table(
@@ -114,8 +116,18 @@ class SinusoidalPositionalEncoding(nn.Module):
 
         Returns:
             ``x + PE[:seq_len]``, followed by dropout. Same shape as input.
+
+        Raises:
+            ValueError: If ``seq_len`` exceeds the pre-allocated ``max_len``.
         """
-        x = x + self.pe[:, : x.size(1), :]
+        seq_len = x.size(1)
+        if seq_len > self.pe.size(1):
+            raise ValueError(
+                f"Input seq_len ({seq_len}) exceeds max_len ({self.pe.size(1)}). "
+                f"Increase max_len at construction or shorten the input."
+            )
+        pe = self.pe[:, :seq_len, :].to(device=x.device, dtype=x.dtype)
+        x = x + pe
         return self.dropout(x)
 
 
@@ -123,7 +135,7 @@ class LearnedPositionalEmbedding(nn.Module):
     """Learnable positional embedding (BERT / GPT-2 / ViT style).
 
     Each position in ``[0, max_len)`` is mapped to a trainable dense vector
-    via ``nn.Embedding``.  Adds ``max_len × d_model`` learnable parameters.
+    via ``nn.Embedding``.  Adds ``max_len x d_model`` learnable parameters.
 
     Args:
         d_model: Embedding / model dimension.
@@ -156,7 +168,18 @@ class LearnedPositionalEmbedding(nn.Module):
         Returns:
             ``x + Embedding[0 … seq_len-1]``, followed by dropout.
             Same shape as input.
+
+        Raises:
+            ValueError: If ``seq_len`` exceeds ``max_len``.
         """
-        positions = torch.arange(x.size(1), device=x.device)
-        x = x + self.embedding(positions)
+        seq_len = x.size(1)
+        max_len = self.embedding.num_embeddings
+        if seq_len > max_len:
+            raise ValueError(
+                f"Input seq_len ({seq_len}) exceeds max_len ({max_len}). "
+                f"Increase max_len at construction or shorten the input."
+            )
+        positions = torch.arange(seq_len, device=x.device)
+        pos_emb = self.embedding(positions).to(dtype=x.dtype)
+        x = x + pos_emb
         return self.dropout(x)

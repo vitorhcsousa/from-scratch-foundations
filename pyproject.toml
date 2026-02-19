@@ -80,3 +80,10 @@ addopts = "-v --tb=short"
 # ── ty ───────────────────────────────────────────────────────────────────────
 [tool.ty.environment]
 root = ["src"]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0.2",
+    "ruff>=0.15.1",
+    "ty>=0.0.17",
+]

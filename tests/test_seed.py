@@ -8,7 +8,7 @@ from unittest.mock import MagicMock, patch
 
 import numpy as np
 import pytest
-from projects.transformer.utils.seed import SeedConfig, set_seed
+from src.foundations.projects.transformer.utils.seed import SeedConfig, set_seed
 
 
 class TestValidation:
@@ -106,28 +106,28 @@ class TestTorchSeeding:
 
     def test_torch_manual_seed_called(self) -> None:
         mock_torch = self._make_mock_torch()
-        with patch("projects.transformer.utils.seed.torch", mock_torch):
+        with patch("src.foundations.projects.transformer.utils.seed.torch", mock_torch):
             set_seed(42)
 
         mock_torch.manual_seed.assert_called_once_with(42)
 
     def test_torch_cuda_seeded_when_available(self) -> None:
         mock_torch = self._make_mock_torch(cuda_available=True)
-        with patch("projects.transformer.utils.seed.torch", mock_torch):
+        with patch("src.foundations.projects.transformer.utils.seed.torch", mock_torch):
             set_seed(42)
 
         mock_torch.cuda.manual_seed_all.assert_called_once_with(42)
 
     def test_torch_cuda_skipped_when_unavailable(self) -> None:
         mock_torch = self._make_mock_torch(cuda_available=False)
-        with patch("projects.transformer.utils.seed.torch", mock_torch):
+        with patch("src.foundations.projects.transformer.utils.seed.torch", mock_torch):
             set_seed(42)
 
         mock_torch.cuda.manual_seed_all.assert_not_called()
 
     def test_deterministic_mode_enabled(self) -> None:
         mock_torch = self._make_mock_torch()
-        with patch("projects.transformer.utils.seed.torch", mock_torch):
+        with patch("src.foundations.projects.transformer.utils.seed.torch", mock_torch):
             set_seed(42, deterministic=True)
 
         assert mock_torch.backends.cudnn.deterministic is True
@@ -136,13 +136,13 @@ class TestTorchSeeding:
 
     def test_deterministic_mode_skipped(self) -> None:
         mock_torch = self._make_mock_torch()
-        with patch("projects.transformer.utils.seed.torch", mock_torch):
+        with patch("src.foundations.projects.transformer.utils.seed.torch", mock_torch):
             set_seed(42, deterministic=False)
 
         mock_torch.use_deterministic_algorithms.assert_not_called()
 
     def test_no_torch_installed(self) -> None:
-        with patch("projects.transformer.utils.seed.torch", None):
+        with patch("src.foundations.projects.transformer.utils.seed.torch", None):
             set_seed(42)  # should not raise
 
     def test_old_torch_without_warn_only(self) -> None:
@@ -152,14 +152,14 @@ class TestTorchSeeding:
             TypeError("unexpected keyword argument 'warn_only'"),
             None,  # second call without warn_only succeeds
         ]
-        with patch("projects.transformer.utils.seed.torch", mock_torch):
+        with patch("src.foundations.projects.transformer.utils.seed.torch", mock_torch):
             set_seed(42, deterministic=True)  # should not raise
 
     def test_very_old_torch_without_deterministic_api(self) -> None:
         """Fallback when use_deterministic_algorithms doesn't exist."""
         mock_torch = self._make_mock_torch()
         mock_torch.use_deterministic_algorithms.side_effect = AttributeError
-        with patch("projects.transformer.utils.seed.torch", mock_torch):
+        with patch("src.foundations.projects.transformer.utils.seed.torch", mock_torch):
             set_seed(42, deterministic=True)  # should not raise
 
 
