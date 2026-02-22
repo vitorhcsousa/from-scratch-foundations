@@ -1,0 +1,119 @@
+.
+├── .github
+│   ├── ISSUE_TEMPLATE
+│   │   ├── bug-report.yml
+│   │   ├── config.yml
+│   │   ├── experiment-benchmark.yml
+│   │   ├── feature-code.yml
+│   │   ├── study-notes.yml
+│   │   └── weekly-plan.yml
+│   ├── pull_request_template.md
+│   └── workflows
+│       └── docs.yml
+├── .gitignore
+├── .idea
+│   ├── .gitignore
+│   ├── copilot.data.migration.ask2agent.xml
+│   ├── from-scratch-foundations.iml
+│   ├── inspectionProfiles
+│   │   └── profiles_settings.xml
+│   ├── material_theme_project_new.xml
+│   ├── misc.xml
+│   ├── modules.xml
+│   ├── vcs.xml
+│   └── workspace.xml
+├── .pre-commit-config.yaml
+├── .pytest_cache
+│   ├── .gitignore
+│   ├── CACHEDIR.TAG
+│   ├── README.md
+│   └── v
+│       └── cache
+│           ├── lastfailed
+│           └── nodeids
+├── Dockerfile
+├── LICENSE
+├── Makefile
+├── README.md
+├── anki
+│   ├── decks
+│   │   └── .gitkeep
+│   └── exports
+│       └── .gitkeep
+├── artifacts
+│   ├── data
+│   │   ├── processed
+│   │   │   └── .gitkeep
+│   │   └── raw
+│   │       └── .gitkeep
+│   └── outputs
+│       └── .gitkeep
+├── docs
+│   ├── deep-learning
+│   │   ├── .gitkeep
+│   │   └── index.md
+│   ├── dsa
+│   │   ├── .gitkeep
+│   │   └── index.md
+│   ├── includes
+│   │   └── abbreviations.md
+│   ├── index.md
+│   ├── javascripts
+│   │   └── katex.js
+│   ├── math
+│   │   ├── .gitkeep
+│   │   └── index.md
+│   ├── nlp-llms
+│   │   ├── .gitkeep
+│   │   └── index.md
+│   ├── overrides
+│   │   └── .gitkeep
+│   ├── reinforcement-learning
+│   │   ├── .gitkeep
+│   │   └── index.md
+│   └── stylesheets
+│       └── extra.css
+├── experiments
+│   ├── configs
+│   │   └── .gitkeep
+│   ├── reports
+│   │   └── .gitkeep
+│   └── results
+│       └── .gitkeep
+├── mkdocs.yml
+├── projects
+│   ├── nlp
+│   │   └── .gitkeep
+│   ├── rl
+│   │   └── .gitkeep
+│   └── transformer
+│       ├── .gitkeep
+│       └── utils
+│           └── seed.py
+├── pyproject.toml
+├── scripts
+│   └── .gitkeep
+├── src
+│   └── foundations
+│       ├── __init__.py
+│       ├── cli
+│       │   ├── __init__.py
+│       │   ├── notes.py
+│       │   └── projects.py
+│       ├── projects
+│       │   ├── __init__.py
+│       │   ├── nlp
+│       │   │   └── __init__.py
+│       │   ├── rl
+│       │   │   └── __init__.py
+│       │   └── transformer
+│       │       └── __init__.py
+│       └── utils
+│           └── __init__.py
+├── tests
+│   ├── __init__.py
+│   └── test_seed.py
+├── tree.txt
+└── uv.lock
+
+46 directories, 71 files

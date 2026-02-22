@@ -64,7 +64,6 @@ def set_seed(seed: int, *, deterministic: bool = True) -> None:
     logger.debug("All RNGs seeded with %d (deterministic=%s)", seed, deterministic)
 
 
-
 def _seed_python(seed: int, *, deterministic: bool) -> None:
     """Seed the Python stdlib RNG and set environment variables."""
     random.seed(seed)
@@ -95,8 +94,8 @@ def _seed_torch(seed: int, *, deterministic: bool) -> None:
         torch.cuda.manual_seed_all(seed)
 
     if deterministic:
-        torch.backends.cudnn.deterministic = True  # type: ignore[attr-defined]
-        torch.backends.cudnn.benchmark = False  # type: ignore[attr-defined]
+        torch.backends.cudnn.deterministic = True
+        torch.backends.cudnn.benchmark = False
         try:
             torch.use_deterministic_algorithms(True, warn_only=True)
         except TypeError:

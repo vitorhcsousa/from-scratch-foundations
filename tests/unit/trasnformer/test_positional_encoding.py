@@ -1,5 +1,6 @@
+import pytest
 import torch
-from projects.transformer.positional_encoding import (
+from src.foundations.projects.transformer.positional_encoding import (
     LearnedPositionalEmbedding,
     SinusoidalPositionalEncoding,
 )
@@ -30,6 +31,11 @@ class TestBuildTable:
         a = SinusoidalPositionalEncoding.build_table(32, 64)
         b = SinusoidalPositionalEncoding.build_table(32, 64)
         assert torch.allclose(a, b)
+
+    def test_rejects_odd_d_model(self) -> None:
+        """build_table must raise ValueError for odd d_model."""
+        with pytest.raises(ValueError, match="d_model must be even"):
+            SinusoidalPositionalEncoding.build_table(10, 15)
 
 
 class TestSinusoidalModule:
@@ -66,6 +72,27 @@ class TestSinusoidalModule:
         x = torch.randn(1, 10, 32)
         assert torch.allclose(layer(x), layer(x))
 
+    def test_raises_when_seq_len_exceeds_max_len(self) -> None:
+        """Forward must raise ValueError when seq_len > max_len."""
+        layer = SinusoidalPositionalEncoding(d_model=16, max_len=10, dropout=0.0)
+        x = torch.randn(1, 20, 16)  # seq_len=20 > max_len=10
+        with pytest.raises(ValueError, match="exceeds max_len"):
+            layer(x)
+
+    def test_dtype_preserved_fp16(self) -> None:
+        """Output dtype must match input dtype (fp16 stays fp16)."""
+        layer = SinusoidalPositionalEncoding(d_model=16, dropout=0.0)
+        x = torch.randn(1, 5, 16, dtype=torch.float16)
+        out = layer(x)
+        assert out.dtype == torch.float16
+
+    def test_dtype_preserved_bf16(self) -> None:
+        """Output dtype must match input dtype (bf16 stays bf16)."""
+        layer = SinusoidalPositionalEncoding(d_model=16, dropout=0.0)
+        x = torch.randn(1, 5, 16, dtype=torch.bfloat16)
+        out = layer(x)
+        assert out.dtype == torch.bfloat16
+
 
 class TestLearnedModule:
     """Tests for the learnable positional embedding module."""
@@ -88,6 +115,11 @@ class TestLearnedModule:
         layer = LearnedPositionalEmbedding(d_model=32, max_len=100)
         assert sum(p.numel() for p in layer.parameters()) == 100 * 32
 
+    def test_params_require_grad(self) -> None:
+        """Embedding parameters must be trainable (requires_grad=True)."""
+        layer = LearnedPositionalEmbedding(d_model=32, max_len=100)
+        assert any(p.requires_grad for p in layer.parameters())
+
     def test_embedding_table_size(self) -> None:
         """Internal embedding weight has shape (max_len, d_model)."""
         layer = LearnedPositionalEmbedding(d_model=64, max_len=200)
@@ -99,3 +131,17 @@ class TestLearnedModule:
         layer.eval()
         x = torch.randn(1, 10, 32)
         assert torch.allclose(layer(x), layer(x))
+
+    def test_raises_when_seq_len_exceeds_max_len(self) -> None:
+        """Forward must raise ValueError when seq_len > max_len."""
+        layer = LearnedPositionalEmbedding(d_model=16, max_len=10, dropout=0.0)
+        x = torch.randn(1, 20, 16)  # seq_len=20 > max_len=10
+        with pytest.raises(ValueError, match="exceeds max_len"):
+            layer(x)
+
+    def test_dtype_preserved_fp16(self) -> None:
+        """Output dtype must match input dtype (fp16 stays fp16)."""
+        layer = LearnedPositionalEmbedding(d_model=16, max_len=50, dropout=0.0)
+        x = torch.randn(1, 5, 16, dtype=torch.float16)
+        out = layer(x)
+        assert out.dtype == torch.float16
