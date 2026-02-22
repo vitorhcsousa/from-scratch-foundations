@@ -5,14 +5,20 @@
 
 /* ── Fonts ───────────────────────────────────────────────────────────────── */
 
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 :root {
-  --md-text-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica,
-                  Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  --md-text-font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+                  Helvetica, Arial, sans-serif, "Apple Color Emoji",
+                  "Segoe UI Emoji";
   --md-code-font: "JetBrains Mono", "SFMono-Regular", Consolas,
                   "Liberation Mono", Menlo, monospace;
 }
+
+
+/* ══════════════════════════════════════════════════════════════════════════
+   COLOR TOKENS
+   ══════════════════════════════════════════════════════════════════════════ */
 
 /* ── Light Mode ──────────────────────────────────────────────────────────── */
 
@@ -53,6 +59,10 @@
   --fsf-warning:                     #bf8700;
   --fsf-danger:                      #cf222e;
   --fsf-research:                    #8256d0;
+
+  /* Explicit header-area text for light mode (fixes white-on-white) */
+  --fsf-header-fg:                   #24292f;
+  --fsf-header-fg--light:            #57606a;
 }
 
 /* ── Dark Mode ───────────────────────────────────────────────────────────── */
@@ -94,22 +104,64 @@
   --fsf-warning:                     #e3b341;
   --fsf-danger:                      #f85149;
   --fsf-research:                    #bc8cff;
+
+  --fsf-header-fg:                   #c9d1d9;
+  --fsf-header-fg--light:            #8b949e;
 }
 
 
 /* ══════════════════════════════════════════════════════════════════════════
-   LAYOUT & STRUCTURE
+   LAYOUT — WIDER CONTENT
    ══════════════════════════════════════════════════════════════════════════ */
 
-/* ── Header ──────────────────────────────────────────────────────────────── */
+/* Widen the entire content grid (default is ~61rem) */
+.md-grid {
+  max-width: 82rem;
+}
+
+/* Content column stretches to fill */
+.md-content__inner {
+  max-width: none;
+  padding-top: 1.2rem;
+}
+
+
+/* ══════════════════════════════════════════════════════════════════════════
+   HEADER — LIGHT MODE FIX (white-on-white)
+   ══════════════════════════════════════════════════════════════════════════ */
 
 .md-header {
-  background: var(--md-default-bg-color);
   box-shadow: none;
   border-bottom: 1px solid var(--fsf-border);
   transition: background 0.3s ease;
 }
 
+/* Light mode: white header needs dark text */
+[data-md-color-scheme="default"] .md-header {
+  background: var(--md-primary-bg-color);
+  color: var(--fsf-header-fg);
+}
+
+[data-md-color-scheme="default"] .md-header .md-header__title,
+[data-md-color-scheme="default"] .md-header .md-header__topic,
+[data-md-color-scheme="default"] .md-header .md-header__ellipsis {
+  color: var(--fsf-header-fg);
+}
+
+[data-md-color-scheme="default"] .md-header .md-header__button {
+  color: var(--fsf-header-fg);
+}
+
+[data-md-color-scheme="default"] .md-header .md-logo {
+  color: var(--fsf-header-fg);
+}
+
+[data-md-color-scheme="default"] .md-header .md-search__icon,
+[data-md-color-scheme="default"] .md-header .md-header__button[for="__search"] {
+  color: var(--fsf-header-fg--light);
+}
+
+/* Dark mode header */
 [data-md-color-scheme="slate"] .md-header {
   background: #010409;
   color: #c9d1d9;
@@ -131,34 +183,70 @@
   opacity: 0.85;
 }
 
-/* ── Navigation Tabs ─────────────────────────────────────────────────────── */
+/* ── Search input ────────────────────────────────────────────────────────── */
+
+.md-search__input {
+  font-size: 0.84rem;
+  border-radius: 8px;
+}
+
+[data-md-color-scheme="default"] .md-search__input {
+  background: var(--fsf-surface);
+  color: var(--md-default-fg-color);
+}
+
+[data-md-color-scheme="default"] .md-search__input::placeholder {
+  color: var(--md-default-fg-color--lighter);
+}
+
+[data-md-color-scheme="slate"] .md-search__input {
+  background: #161b22;
+}
+
+.md-search__input::placeholder {
+  font-size: 0.82rem;
+}
+
+/* Search overlay text */
+[data-md-color-scheme="default"] .md-search-result__link {
+  color: var(--md-default-fg-color);
+}
+
+[data-md-color-scheme="default"] .md-search-result__meta {
+  color: var(--md-default-fg-color--light);
+}
+
+
+/* ══════════════════════════════════════════════════════════════════════════
+   NAVIGATION TABS — LIGHT MODE FIX
+   ══════════════════════════════════════════════════════════════════════════ */
 
 .md-tabs {
-  background: var(--md-default-bg-color);
   border-bottom: 1px solid var(--fsf-border);
 }
 
+/* Light: dark text on white tab bar */
+[data-md-color-scheme="default"] .md-tabs {
+  background: var(--md-primary-bg-color);
+}
+
+[data-md-color-scheme="default"] .md-tabs__link {
+  color: var(--fsf-header-fg--light);
+  opacity: 1;
+}
+
+[data-md-color-scheme="default"] .md-tabs__link:hover {
+  color: var(--fsf-header-fg);
+}
+
+[data-md-color-scheme="default"] .md-tabs__link--active {
+  color: var(--md-accent-fg-color);
+  font-weight: 600;
+}
+
+/* Dark */
 [data-md-color-scheme="slate"] .md-tabs {
   background: #010409;
-  color: #c9d1d9;
-}
-
-.md-tabs__link {
-  font-weight: 500;
-  font-size: 0.72rem;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  opacity: 0.55;
-  transition: opacity 0.2s ease, color 0.2s ease;
-}
-
-.md-tabs__link:hover {
-  opacity: 0.85;
-}
-
-.md-tabs__link--active {
-  opacity: 1;
-  font-weight: 600;
 }
 
 [data-md-color-scheme="slate"] .md-tabs__link {
@@ -174,7 +262,19 @@
   color: #e6edf3;
 }
 
-/* ── Sidebar ─────────────────────────────────────────────────────────────── */
+/* Shared tab styling */
+.md-tabs__link {
+  font-weight: 500;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  transition: color 0.2s ease;
+}
+
+
+/* ══════════════════════════════════════════════════════════════════════════
+   SIDEBAR
+   ══════════════════════════════════════════════════════════════════════════ */
 
 .md-sidebar {
   border-right: none;
@@ -210,14 +310,10 @@
   font-weight: 500;
 }
 
-/* ── Content area ────────────────────────────────────────────────────────── */
 
-.md-content__inner {
-  max-width: 52em;
-  padding-top: 1.2rem;
-}
-
-/* ── Footer ──────────────────────────────────────────────────────────────── */
+/* ══════════════════════════════════════════════════════════════════════════
+   FOOTER
+   ══════════════════════════════════════════════════════════════════════════ */
 
 .md-footer {
   border-top: 1px solid var(--fsf-border);
@@ -230,6 +326,11 @@
 .md-footer-meta__inner.md-typeset .md-copyright {
   font-size: 0.72rem;
   opacity: 0.7;
+}
+
+/* Footer nav links — fix light mode visibility */
+[data-md-color-scheme="default"] .md-footer__link {
+  color: var(--md-footer-fg-color);
 }
 
 
@@ -299,14 +400,15 @@
   background-size: 100% 2px;
 }
 
-/* Blockquote */
+/* Blockquote — accent left border, subtle bg */
 .md-typeset blockquote {
   border-left: 3px solid var(--md-accent-fg-color);
   color: var(--md-default-fg-color--light);
   font-style: italic;
-  padding: 0.3em 1.2em;
+  padding: 0.6em 1.2em;
   margin: 1.4em 0;
-  background: transparent;
+  background: var(--md-accent-fg-color--transparent);
+  border-radius: 0 6px 6px 0;
 }
 
 /* HR */
@@ -472,6 +574,7 @@
 .md-typeset table:not([class]) td {
   padding: 0.65em 1.1em;
   border-bottom: 1px solid var(--fsf-border);
+  color: var(--md-typeset-color);
 }
 
 .md-typeset table:not([class]) tr:last-child td {
@@ -551,6 +654,17 @@
   font-size: 1.05em;
 }
 
+/* Ensure KaTeX text inherits theme colors */
+.md-typeset .katex .mord,
+.md-typeset .katex .mrel,
+.md-typeset .katex .mbin,
+.md-typeset .katex .mop,
+.md-typeset .katex .mpunct,
+.md-typeset .katex .mopen,
+.md-typeset .katex .mclose {
+  color: var(--md-typeset-color);
+}
+
 
 /* ══════════════════════════════════════════════════════════════════════════
    TAGS
@@ -566,25 +680,6 @@
   background: var(--md-accent-fg-color--transparent);
   color: var(--md-accent-fg-color);
   border: none;
-}
-
-
-/* ══════════════════════════════════════════════════════════════════════════
-   SEARCH
-   ══════════════════════════════════════════════════════════════════════════ */
-
-.md-search__input {
-  font-size: 0.84rem;
-  background: var(--fsf-surface);
-  border-radius: 8px;
-}
-
-[data-md-color-scheme="slate"] .md-search__input {
-  background: #161b22;
-}
-
-.md-search__input::placeholder {
-  font-size: 0.82rem;
 }
 
 
@@ -608,6 +703,24 @@
 
 [data-md-color-scheme="slate"] ::-webkit-scrollbar-thumb:hover {
   background: #484f58;
+}
+
+
+/* ══════════════════════════════════════════════════════════════════════════
+   THEME TOGGLE — LIGHT MODE ICON FIX
+   ══════════════════════════════════════════════════════════════════════════ */
+
+[data-md-color-scheme="default"] .md-header__button[for="__palette"] {
+  color: var(--fsf-header-fg);
+}
+
+/* Version selector & source link in header */
+[data-md-color-scheme="default"] .md-header__source {
+  color: var(--fsf-header-fg--light);
+}
+
+[data-md-color-scheme="default"] .md-source__repository {
+  color: var(--fsf-header-fg);
 }
 
 
