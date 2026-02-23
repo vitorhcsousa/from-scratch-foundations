@@ -7,7 +7,7 @@ positional encoding strategies.
 import pytest
 import torch
 
-from tfs.nn.embeddings import TokenAndPositionalEmbedding
+from foundations.projects.transformer.embeddings import TokenAndPositionalEmbedding
 
 # ── Shared fixtures ──────────────────────────────────────────────────────────
 
